@@ -16,15 +16,12 @@ Serial.print(distance);
 Serial.println(" cm");
 Serial.println("-----");
 if(distance < 90){
-  tone(Speaker, 1000);
-  delay(200);
-  tone(Speaker, 700);
-  delay(200);
+  Alarmnoise();
 }
 else
 {
   noTone(Speaker);
-  delay(400);
+  //delay(400);
 }
 }
 
@@ -37,6 +34,13 @@ delayMicroseconds(10);
 digitalWrite(trigPin, LOW);
 duration = pulseIn(echoPin, HIGH);
 return duration;
+}
+
+long Alarmnoise(){
+  tone(Speaker, 1000);
+  delay(200);
+  tone(Speaker, 700);
+  delay(200);
 }
 
 long msToCm(long microseconds) {
