@@ -62,7 +62,6 @@ if(alarmprimed == true)
 
 
 if(menumenu == true){
-  lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("A - To Prime Alarm");
   lcd.setCursor(0,2);
@@ -72,6 +71,7 @@ if(menumenu == true){
         if (keypressed == 'A') {
           int i = 9;
           menumenu = false;
+          lcd.clear();
           lcd.setCursor(5,1);
           lcd.print("!Priming!");
           lcd.setCursor(9,2);
