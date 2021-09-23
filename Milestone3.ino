@@ -72,7 +72,6 @@ if(menumenu == true){
         if (keypressed == 'A') {
           int i = 9;
           menumenu = false;
-          lcd.clear();
           lcd.setCursor(5,1);
           lcd.print("!Priming!");
           lcd.setCursor(9,2);
@@ -248,6 +247,7 @@ void enterPassword() {
           noTone(Speaker);
           delay(3000);
           menumenu = true;
+          lcd.clear();
         }
         else if (tempPassword2 != password) {
           lcd.setCursor(3,2);
