@@ -1,7 +1,7 @@
   
 #define echoPin 31
 #define trigPin 33
-#define Speaker 11
+#define Speaker 35
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
 
