@@ -62,6 +62,7 @@ if(alarmprimed == true)
 
 
 if(menumenu == true){
+  lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("A - To Prime Alarm");
   lcd.setCursor(0,2);
@@ -245,6 +246,8 @@ void enterPassword() {
           alarmon = false;
           alarmprimed = false;
           noTone(Speaker);
+          delay(3000);
+          menumenu = true;
         }
         else if (tempPassword2 != password) {
           lcd.setCursor(3,2);
