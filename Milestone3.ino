@@ -1,6 +1,6 @@
-//Rhys 
-#define echoPin 13
-#define trigPin 12
+  
+#define echoPin 31
+#define trigPin 33
 #define Speaker 11
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
@@ -70,7 +70,6 @@ if(menumenu == true){
  
         if (keypressed == 'A') {
           int i = 9;
-          int aaa = 2000;
           menumenu = false;
           lcd.clear();
           lcd.setCursor(5,1);
@@ -81,17 +80,12 @@ if(menumenu == true){
           lcd.clear();
            lcd.setCursor(5,1);
           lcd.print("!Priming!");
-          tone(Speaker, aaa, 100);
-          aaa -= 100;
           while(i != 0){
             lcd.setCursor(9,2);
             lcd.print(i);
             delay(1000);
-            aaa -= 100;
-            tone(Speaker, aaa, 100);
             i--;
           if(i == 1){
-            tone(Speaker, aaa, 1000);
             alarmprimed = true;
             lcd.clear();
             lcd.setCursor(6,1);
