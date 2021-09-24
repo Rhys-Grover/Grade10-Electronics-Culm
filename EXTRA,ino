@@ -5,7 +5,7 @@
 #include "SPI.h"
 #define echoPin 31
 #define trigPin 33
-#define Speaker 13
+#define Speaker 46
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
 #define SD_ChipSelectPin 53
@@ -72,7 +72,7 @@ lcd.init();
 lcd.clear();         
 lcd.backlight();
 tmrpcm.setVolume(6);
-tmrpcm.play("Judeboxjoints.wav");
+tmrpcm.play("Runaway.wav");
 }
 
 
@@ -109,29 +109,35 @@ if(menumenu == true){
  
         if (keypressed == 'A') {
           int i = 9;
+          int hhh = 2000;
+          audio.stopPlayback();
           menumenu = false;
           lcd.clear();
           lcd.setCursor(5,1);
           lcd.print("!Priming!");
           lcd.setCursor(9,2);
           lcd.print("10");
+          tone(Speaker, hhh, 100);
+          hhh -= 100;
           delay(1000);
           lcd.clear();
-           lcd.setCursor(5,1);
+          lcd.setCursor(5,1);
           lcd.print("!Priming!");
           while(i != 0){
             lcd.setCursor(9,2);
             lcd.print(i);
+            tone(Speaker, hhh, 100);
             delay(1000);
             i--;
+            hhh -= 100;
           if(i == 1){
             alarmprimed = true;
+            tone(Speaker, hhh, 500);
             lcd.clear();
             lcd.setCursor(6,1);
             lcd.print("!PRIMED!");
             lcd.setCursor(6,2);
             lcd.print("!PRIMED!");
-            audio.stopPlayback();
           }
          }
         }
