@@ -5,10 +5,17 @@
 #include "SPI.h"
 #define echoPin 31
 #define trigPin 33
-#define Speaker 46
+#define Speaker 13
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
 #define SD_ChipSelectPin 53
+#include <FastLED.h>
+#define NUM_LEDS 60
+#define DATA_PIN 2
+
+CRGB leds[NUM_LEDS];
+
+TMRpcm audio;
 
 LiquidCrystal_I2C lcd(0x27,20,4);
 char keypressed;
@@ -44,22 +51,28 @@ void setup() {
 Serial.begin(9600);
 tmrpcm.speakerPin = 46;
 
+LEDS.addLeds<WS2812,DATA_PIN,RGB>(leds,NUM_LEDS);
+LEDS.setBrightness(20);
+
 if (!SD.begin(SD_ChipSelectPin)) {
 Serial.println("SD fail");
-return;
+}
+
+for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CRGB(255, 255, 255);
+    FastLED.show(); 
 }
 
 
 pinMode(10, OUTPUT);
-//pinMode(Speaker, OUTPUT);
+pinMode(Speaker, OUTPUT);
 pinMode(trigPin, OUTPUT);
 pinMode(echoPin, INPUT);
 lcd.init();
 lcd.clear();         
 lcd.backlight();
 tmrpcm.setVolume(6);
-tmrpcm.play("Song.wav");
-
+tmrpcm.play("Judeboxjoints.wav");
 }
 
 
@@ -78,6 +91,11 @@ if(alarmprimed == true)
   tone(Speaker, 1000);
   enterPassword();
   alarmprimed = false;
+   for(int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CRGB(0, 255, 0);
+    FastLED.show();
+    delay(10);
+}
   }
 }
 
@@ -113,6 +131,7 @@ if(menumenu == true){
             lcd.print("!PRIMED!");
             lcd.setCursor(6,2);
             lcd.print("!PRIMED!");
+            audio.stopPlayback();
           }
          }
         }
