@@ -40,21 +40,17 @@ TMRpcm tmrpcm; // create an object for use in this sketch
  
 void setup() {
 
+Serial.begin(9600);
+tmrpcm.speakerPin = 46;
+
 if (!SD.begin(SD_ChipSelectPin)) {
 Serial.println("SD fail");
 return;
-  
-tmrpcm.speakerPin = 46;
+}
+
+
 pinMode(10, OUTPUT);
-pinMode(Speaker, OUTPUT);
-
- if (!SD.begin(10)) {
-    Serial.println("initialization failed!");
-    return;
-  }
-  Serial.println("initialization done.");
-
-Serial.begin(9600);
+//pinMode(Speaker, OUTPUT);
 pinMode(trigPin, OUTPUT);
 pinMode(echoPin, INPUT);
 lcd.init();
@@ -69,9 +65,9 @@ tmrpcm.play("Song.wav");
 void loop() {
   
 int distance = msToCm( getDistance() );
-//Serial.print(distance);
-//Serial.println(" cm");
-//Serial.println("-----");
+Serial.print(distance);
+Serial.println(" cm");
+Serial.println("-----");
 
 if(alarmprimed == true)
 {
