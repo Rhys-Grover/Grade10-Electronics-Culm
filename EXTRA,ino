@@ -358,7 +358,7 @@ void Musiccode() {
          lcd.setCursor(4, 0);
          lcd.print("Now Playing!");
          lcd.setCursor(6, 1);
-         lcd.print("Runaway!");
+         lcd.print("Runaway");
          lcd.setCursor(5,2);
          lcd.print("Kanye West");
           lcd.setCursor(1,3);
@@ -406,7 +406,7 @@ void Musiccode() {
          lcd.setCursor(4, 0);
         lcd.print("Now Playing!");
          lcd.setCursor(5, 1);
-        lcd.print("On Sight!");
+        lcd.print("On Sight");
          lcd.setCursor(5,2);
          lcd.print("Kanye West");
           lcd.setCursor(1,3);
@@ -416,6 +416,109 @@ void Musiccode() {
          MusiccodeA = true;
         MusiccodeB = false;
     }
+
+       // Off the Grid
+       if(tempMusiccode == "5414"){
+        lcd.clear();
+         lcd.setCursor(4, 0);
+        lcd.print("Now Playing!");
+         lcd.setCursor(4, 1);
+        lcd.print("Off The Grid");
+         lcd.setCursor(5,2);
+         lcd.print("Kanye West");
+          lcd.setCursor(1,3);
+          lcd.print("Return to Menu - #");
+         tmrpcm.setVolume(6);
+         tmrpcm.play("Offthegrid.wav");
+         MusiccodeA = true;
+        MusiccodeB = false;
+    }
+
+       // Waves
+       if(tempMusiccode == "9881"){
+        lcd.clear();
+         lcd.setCursor(4, 0);
+        lcd.print("Now Playing!");
+         lcd.setCursor(7, 1);
+        lcd.print("Waves");
+         lcd.setCursor(5,2);
+         lcd.print("Kanye West");
+          lcd.setCursor(1,3);
+          lcd.print("Return to Menu - #");
+         tmrpcm.setVolume(6);
+         tmrpcm.play("Waves.wav");
+         MusiccodeA = true;
+        MusiccodeB = false;
+    }
+
+     // Jigsaw Falling Into Place
+       if(tempMusiccode == "1411"){
+        lcd.clear();
+         lcd.setCursor(4, 0);
+        lcd.print("Now Playing!");
+         lcd.setCursor(0, 1);
+        lcd.print("Jigsaw Falling>Place");
+         lcd.setCursor(5,2);
+         lcd.print("Radiohead");
+          lcd.setCursor(1,3);
+          lcd.print("Return to Menu - #");
+         tmrpcm.setVolume(6);
+         tmrpcm.play("Waves.wav");
+         MusiccodeA = true;
+        MusiccodeB = false;
+    }
+
+    // Judebox Joints
+       if(tempMusiccode == "1566"){
+        lcd.clear();
+         lcd.setCursor(4, 0);
+        lcd.print("Now Playing!");
+         lcd.setCursor(3, 1);
+        lcd.print("Judebox Joints");
+         lcd.setCursor(5,2);
+         lcd.print("Asap Rocky");
+          lcd.setCursor(1,3);
+          lcd.print("Return to Menu - #");
+         tmrpcm.setVolume(6);
+         tmrpcm.play("Judeboxjoints.wav");
+         MusiccodeA = true;
+        MusiccodeB = false;
+    }
+
+    // Sickomode
+       if(tempMusiccode == "1566"){
+        lcd.clear();
+         lcd.setCursor(4, 0);
+        lcd.print("Now Playing!");
+         lcd.setCursor(5, 1);
+        lcd.print("Sickomode");
+         lcd.setCursor(4,2);
+         lcd.print("Travis Scott");
+          lcd.setCursor(1,3);
+          lcd.print("Return to Menu - #");
+         tmrpcm.setVolume(6);
+         tmrpcm.play("Sickomode.wav");
+         MusiccodeA = true;
+        MusiccodeB = false;
+    }
+
+    // Radioactive
+       if(tempMusiccode == "1122"){
+        lcd.clear();
+         lcd.setCursor(4, 0);
+        lcd.print("Now Playing!");
+         lcd.setCursor(4, 1);
+        lcd.print("Radioactive");
+         lcd.setCursor(3,2);
+         lcd.print("Imagine Dragons");
+          lcd.setCursor(1,3);
+          lcd.print("Return to Menu - #");
+         tmrpcm.setVolume(6);
+         tmrpcm.play("Radioactive.wav");
+         MusiccodeA = true;
+        MusiccodeB = false;
+    }
+    
      }
     
     if (yy > 5 || keypressed == '#') {
