@@ -1,4 +1,9 @@
-//Rhys
+//Rhys Grover
+//Grade 10 Electronics Culminating
+//Supersonic Alarm System + Extras
+//Format your sd card to Fat32
+//Search up The mins for adafruit sd card reader for arduino mega and use them the others will not work
+//Speaker requieres a amp
 #include "SD.h"
 #define SD_ChipSelectPin 53
 #include "TMRpcm.h"
@@ -33,6 +38,8 @@ boolean passChanged = false;
 boolean MusiccodeB = false;
 boolean MusiccodeA = false;
 int k = 8;
+int dis = 0;
+int firstfewC = 22;
 
 char keyMap[ROWS][COLS] = {
   {'1', '2', '3', 'A'},
@@ -84,10 +91,19 @@ void loop() {
   Serial.print(distance);
   Serial.println(" cm");
   Serial.println("-----");
+  Serial.print(dis);
+  Serial.println(" ...cm");
+  Serial.println("-----");
 
   if (alarmprimed == true)
   {
-    if (distance < 50)
+    int firstfew = 1000;
+    if(firstfewC == 1){
+      firstfew = 0;
+    }else{
+      firstfewC -= 1;
+    }
+    if ((distance + firstfew) < dis)
     {
       for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = CRGB(0, 255, 0);
@@ -129,21 +145,33 @@ void loop() {
       lcd.clear();
       lcd.setCursor(5, 1);
       lcd.print("!Priming!");
-      while (i != 0) {
+      while (i == 2 || i == 3 || i == 4|| i == 5 || i == 6 || i == 7 || i == 8 || i == 9){
+        int distance = msToCm( getDistance() );
+        Serial.print(distance);
+        Serial.println(" cm");
+        Serial.println("-----");
         lcd.setCursor(9, 2);
         lcd.print(i);
         tone(Speaker, hhh, 100);
         delay(1000);
+        dis = dis + distance;
         i--;
         hhh -= 100;
         if (i == 1) {
           alarmprimed = true;
+          dis = dis / 8;
+          dis -= 10;
           tone(Speaker, hhh, 500);
           lcd.clear();
           lcd.setCursor(6, 1);
           lcd.print("!PRIMED!");
           lcd.setCursor(6, 2);
           lcd.print("!PRIMED!");
+          lcd.setCursor(0, 3);
+          lcd.print("Distance At Cm> ");
+          lcd.setCursor(16, 3);
+          lcd.print(dis);
+          delay(5000);
         }
       }
     }
@@ -189,11 +217,13 @@ void enterPassword() {
   lcd.setCursor(3, 2);
   lcd.print("Pass>");
   while (alarmprimed) {
+   // int distance = msToCm( getDistance() );
+   // Serial.print(distance);
+   // Serial.println(" cm");
+   // Serial.println("-----");
     keypressed = myKeypad.getKey();
     if (keypressed != NO_KEY) {
-      if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||
-          keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' ||
-          keypressed == '8' || keypressed == '9' ) {
+      if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' || keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' || keypressed == '8' || keypressed == '9' ) {
         tempPassword2 += keypressed;
         lcd.setCursor(k, 2);
         lcd.print("*");
@@ -222,8 +252,14 @@ void enterPassword() {
         lcd.print("SYSTEMS DISABLED");
         alarmon = false;
         alarmprimed = false;
+        firstfewC = 22;
+        int dis = 0;
         noTone(Speaker);
-        delay(3000);
+        for (int i = 0; i < NUM_LEDS; i++) {
+        leds[i] = CRGB(255, 255, 255);
+        FastLED.show();
+        delay(34);
+      }
         menumenu = true;
         lcd.clear();
       }
@@ -262,9 +298,7 @@ void Changecode() {
   while (passChanged == true) {
     keypressed = myKeypad.getKey();
     if (keypressed != NO_KEY) {
-      if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||
-          keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' ||
-          keypressed == '8' || keypressed == '9' ) {
+      if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' || keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' || keypressed == '8' || keypressed == '9' ) {
         tempPassword += keypressed;
         lcd.setCursor(h, 1);
         lcd.print("*");
@@ -276,10 +310,12 @@ void Changecode() {
       tempPassword = "";
       h = 1;
       lcd.clear();
-      lcd.setCursor(0, 0);
+      lcd.setCursor(3, 1);
       lcd.print("Current Password");
-      lcd.setCursor(0, 1);
+      lcd.setCursor(7, 2);
       lcd.print(">");
+      lcd.setCursor(13, 2);
+      lcd.print("<");
     }
     if ( keypressed == '*') {
       h = 1;
@@ -287,16 +323,17 @@ void Changecode() {
       if (password == tempPassword) {
         tempPassword = "";
         lcd.clear();
-        lcd.setCursor(0, 0);
+        lcd.clear();
+        lcd.setCursor(3, 1);
         lcd.print("Set New Password");
-        lcd.setCursor(0, 1);
+        lcd.setCursor(7, 2);
         lcd.print(">");
+        lcd.setCursor(13, 2);
+        lcd.print("<");
         while (passChangeMode == true) {
           keypressed = myKeypad.getKey();
           if (keypressed != NO_KEY) {
-            if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||
-                keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' ||
-                keypressed == '8' || keypressed == '9' ) {
+            if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' || keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' || keypressed == '8' || keypressed == '9' ) {
               tempPassword += keypressed;
               lcd.setCursor(h, 1);
               lcd.print("*");
@@ -309,10 +346,13 @@ void Changecode() {
             h = 1;
             tone(Speaker, 2000, 100);
             lcd.clear();
-            lcd.setCursor(0, 0);
+            lcd.clear();
+            lcd.setCursor(3, 1);
             lcd.print("Set New Password");
-            lcd.setCursor(0, 1);
+            lcd.setCursor(7, 2);
             lcd.print(">");
+            lcd.setCursor(13, 2);
+            lcd.print("<");
           }
           if ( keypressed == '*') {
             passChangeMode = false;
@@ -343,9 +383,7 @@ void Musiccode() {
         while (MusiccodeB == true) {
     keypressed = myKeypad.getKey();
     if (keypressed != NO_KEY) {
-      if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||
-          keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' ||
-          keypressed == '8' || keypressed == '9' ) {
+      if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' || keypressed == '8' || keypressed == '9' ) {
         tempMusiccode += keypressed;
         lcd.setCursor(yy, 1);
         lcd.print(keypressed);
@@ -384,7 +422,7 @@ void Musiccode() {
          MusiccodeA = true;
          MusiccodeB = false;
      }
-      //on sight 
+      //on sight
        if(tempMusiccode == "1547"){
          lcd.clear();
          lcd.setCursor(4, 0);
@@ -463,7 +501,7 @@ void Musiccode() {
           lcd.setCursor(1,3);
           lcd.print("Return to Menu - #");
          tmrpcm.setVolume(6);
-         tmrpcm.play("Waves.wav");
+         tmrpcm.play("Jigsawfallin.wav");
          MusiccodeA = true;
         MusiccodeB = false;
     }
@@ -486,7 +524,7 @@ void Musiccode() {
     }
 
     // Sickomode
-       if(tempMusiccode == "1566"){
+       if(tempMusiccode == "3733"){
         lcd.clear();
          lcd.setCursor(4, 0);
         lcd.print("Now Playing!");
@@ -518,9 +556,9 @@ void Musiccode() {
          MusiccodeA = true;
         MusiccodeB = false;
     }
-    
+   
      }
-    
+   
     if (yy > 5 || keypressed == '#') {
       tempMusiccode = "";
       yy = 1;
